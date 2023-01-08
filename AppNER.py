@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import brat
+import annotate
 
 # Load the press release data into a Pandas DataFrame
 df = pd.read_csv("https://raw.githubusercontent.com/hoyinli1211/NER_ICAC/main/ICACPressReleases.csv")
@@ -17,15 +17,12 @@ location_button = st.button("Location")
 
 # Save the annotated data
 if person_button or organization_button or location_button:
-  # Save the annotated data in the DataFrame
-  df.loc[0, "named_entities"] = ner.extract_entities(text_input)
-
-  # Create a Brat annotation document
-  doc = brat.Document()
+  # Create an AnnoTate annotation document
+  doc = annotate.Document(text=text_input)
 
   # Add the annotated data to the document
-  doc.add_entities(ner.extract_entities(text_input), text_input)
+  doc.add_entities(ner.extract_entities(text_input))
 
   # Save the document
-  doc.save("icac_ner.ann")
+  doc.save("icac_ner.jsonl")
   st.write("Annotated data saved!")
