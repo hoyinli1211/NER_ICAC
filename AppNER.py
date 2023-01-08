@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import brat
 
+# Load the press release data into a Pandas DataFrame
 df = pd.read_csv("https://raw.githubusercontent.com/hoyinli1211/NER_ICAC/main/ICACPressReleases.csv")
 
 st.title("Named Entity Annotation Tool")
@@ -16,7 +17,7 @@ location_button = st.button("Location")
 
 # Save the annotated data
 if person_button or organization_button or location_button:
-  # Create a Brat annotation document
+  # Save the annotated data in the DataFrame
   df.loc[0, "named_entities"] = ner.extract_entities(text_input)
 
   # Create a Brat annotation document
