@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import prodigy
+import brat
 
 df = pd.read_csv("https://raw.githubusercontent.com/hoyinli1211/NER_ICAC/main/ICACPressReleases.csv")
 
