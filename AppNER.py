@@ -16,12 +16,15 @@ location_button = st.button("Location")
 
 # Save the annotated data
 if person_button or organization_button or location_button:
-  # Create a Prodigy dataset to store the annotated data
-  dataset = prodigy.Dataset("icac_ner")
+  # Create a Brat annotation document
+  df.loc[0, "named_entities"] = ner.extract_entities(text_input)
 
-  # Add the annotated data to the dataset
-  prodigy.log_ner(dataset, entities=ner.extract_entities(text_input), text=text_input)
+  # Create a Brat annotation document
+  doc = brat.Document()
 
-  # Save the dataset
-  prodigy.save(dataset)
+  # Add the annotated data to the document
+  doc.add_entities(ner.extract_entities(text_input), text_input)
+
+  # Save the document
+  doc.save("icac_ner.ann")
   st.write("Annotated data saved!")
